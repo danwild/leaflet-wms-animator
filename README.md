@@ -36,6 +36,7 @@ var args = {
 	// how long to show each frame in the animation  
 	timeoutMs: 300,
 	
+	// **See defining image request for more info**
 	// due to CORS restrictions, you need to define an async function to ask your proxy server to make the WMS 
 	// GetMap request and resolve the result - this example is using a call to a server function called 'getImage' (in MeteorJS)
 	// note that if your target WMS is CORS enabled, you can just define a direct HTTP request here instead.
@@ -76,6 +77,22 @@ var args = {
 LeafletWmsAnimator.initAnimation(args, function(frames){
 	// callback function returns an array of images with their
 	// respective time stamps (e.g. you can use timestamps in UI)
+});
+```
+
+## defining the image request
+
+Images for the map layers are defined as [base64](https://en.wikipedia.org/wiki/Base64) strings. 
+
+For simplicity, in my proxy server function - I use the `encode` method from 
+[node-base64-image](https://www.npmjs.com/package/node-base64-image) wrapped in a Promise, like this:
+
+```javascript
+return new Promise((resolve, reject) => {
+	encode(url, {string: true}, function (err, res) {
+		if(err) reject(err);
+		resolve('data:image/png;base64,' + res);
+	});
 });
 ```
 
