@@ -1,6 +1,6 @@
 {
   "name": "leaflet-wms-animator",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Animate WMS layers with temporal dimensions",
   "license": "MIT",
   "repository": {

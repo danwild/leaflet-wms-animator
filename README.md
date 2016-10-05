@@ -2,13 +2,14 @@
 
 Animate WMS layers with temporal dimensions.
 
-WMS implementations are crudely starting to support animations, through the use of animated GIFs 
+Some WMS implementations now support animations through the use of animated GIFs 
 (e.g. [Geoserver WMS Animator](http://docs.geoserver.org/stable/en/user/tutorials/animreflector.html)).<br/>
 However; the lack of start/stop/step/rewind etc. functionality in a GIF limits the usefulness of this approach.
 
 This simple JS plugin provides some convenience functions to pre-fetch a collection of temporal slices 
 from WMS to step through and/or animate them as [leaflet image overlays](http://leafletjs.com/reference.html#imageoverlay).
-<br/>Note that this plugin works for ncWMS (as per example, `params` object accepts arbitrary key/value pairs).
+
+Note that this plugin works for ncWMS (as per example, `params` object accepts arbitrary key/value pairs).
 
 ## notes before use
 

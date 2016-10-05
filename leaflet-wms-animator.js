@@ -108,7 +108,7 @@
 		timer = setTimeout(function(){
 			LeafletWmsAnimator.forward();
 			_animateLoop();
-		}, LeafletWmsAnimator.timeoutMs);
+		}, timeoutMs);
 	}
 
 	function _createFrameLayers(frames, bounds, map){
