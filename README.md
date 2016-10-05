@@ -38,16 +38,16 @@ var args = {
 	
 	// **See defining image request for more info**
 	// due to CORS restrictions, you need to define an async function to ask your proxy server to make the WMS 
-	// GetMap request and resolve the result - this example is using a call to a server function called 'getImage' (in MeteorJS)
-	// note that if your target WMS is CORS enabled, you can just define a direct HTTP request here instead.
+	// GetMap request and resolve the result (as a base64 encoded string). This example is using a call to a server function called 
+	// 'getImage' (in MeteorJS). Note that if your target WMS is CORS enabled, you can just define a direct HTTP request here instead.
 	proxyFunction: function(requestUrl, time, resolve, reject){
 		
-		Meteor.call('getImage', requestUrl, function(err, res) {
+		Meteor.call('getImage', requestUrl, function(err, base64ImgString) {
 			if(err){
 				reject(err);
 			}
 
-			resolve({ time: time, img: res });
+			resolve({ time: time, img: base64ImgString });
 		});
 	},
 	
@@ -91,6 +91,8 @@ For simplicity, in my proxy server function - I use the `encode` method from
 return new Promise((resolve, reject) => {
 	encode(url, {string: true}, function (err, res) {
 		if(err) reject(err);
+		
+		// returns a base64 encoded string representing our layer image
 		resolve('data:image/png;base64,' + res);
 	});
 });
