@@ -28,7 +28,7 @@
 	LeafletWmsAnimator.initAnimation = function(options, callback){
 
 		map = options.map;
-		timeoutMs = options.timeoutMs || 300;
+		timeoutMs = options.timeoutMs || 200;
 
 		// these params shouldn't change
 		options.params['SERVICE'] = "WMS";

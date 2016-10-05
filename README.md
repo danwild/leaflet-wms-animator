@@ -36,13 +36,13 @@ var args = {
 	// how long to show each frame in the animation  
 	timeoutMs: 300,
 	
-	// due to CORS restrictions, you need to define a function to ask your proxy server to make the WMS 
-	// GetMap request - this example is using a call to a server function called 'getImage' (in MeteorJS)
+	// due to CORS restrictions, you need to define an async function to ask your proxy server to make the WMS 
+	// GetMap request and resolve the result - this example is using a call to a server function called 'getImage' (in MeteorJS)
 	// note that if your target WMS is CORS enabled, you can just define a direct HTTP request here instead.
 	proxyFunction: function(requestUrl, time, resolve, reject){
+		
 		Meteor.call('getImage', requestUrl, function(err, res) {
 			if(err){
-				console.log('http request rejected');
 				reject(err);
 			}
 
