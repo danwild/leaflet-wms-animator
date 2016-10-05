@@ -1,4 +1,4 @@
-# leaflet wms animator [![NPM version][npm-image]][npm-url]
+# leaflet wms animator [![npm version](https://badge.fury.io/js/leaflet-wms-animator.svg)](https://badge.fury.io/js/leaflet-wms-animator)
 
 Animate WMS layers with temporal dimensions.
 
@@ -13,6 +13,8 @@ from WMS to step through and/or animate them as [leaflet image overlays](http://
 ## notes before use
 
 - To get around CORS restrictions, I am using a proxy server. To use this plugin you will also need a proxy server, OR have admin access to your target WMS to enable CORS.
+- This plugin uses [ES6 Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) syntax,
+ which is [not supported](http://caniuse.com/#feat=promises) by older browsers - you may need a [Polyfill](https://babeljs.io/docs/usage/polyfill/).
 
 ## example use
 ```javascript
