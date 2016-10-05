@@ -8,73 +8,73 @@ However; the lack of start/stop/step/rewind etc. functionality in a GIF limits t
 
 This simple JS plugin provides some convenience functions to pre-fetch a collection of temporal slices 
 from WMS to step through and/or animate them as [leaflet image overlays](http://leafletjs.com/reference.html#imageoverlay).
-Note that this plugin works for ncWMS (as per example, `params` object accepts arbitrary key/value pairs).
+<br/>Note that this plugin works for ncWMS (as per example, `params` object accepts arbitrary key/value pairs).
 
 ## notes before use
 
 - To get around CORS restrictions, I am using a proxy server. To use this plugin you will also need a proxy server, OR have admin access to your target WMS to enable CORS.
 
 ## example use
-
-	var args = {
-			
-			// reference to your leaflet map
-			map: map,
-			
-			// WMS endpoint
-			url: 'http://localhost:8080/geoserver/wms',
-			
-			// time slices to create (u probably want more than 2)
-			times: ["2016-09-17T11:00:00.000Z", "2016-09-17T12:00:00.000Z"],
-			
-			// the bounds for the entire target WMS layer
-			bbox: ["144.9497022","-42.5917177","145.7445272","-41.9883032"],
-			
-			// how long to show each frame in the animation  
-			timeoutMs: 300,
-			
-			// due to CORS restrictions, you need to define a function to ask your proxy server to make the WMS 
-			// GetMap request - this example is using a call to a server function called 'getImage' (in MeteorJS)
-			// note that if your target WMS is CORS enabled, you can just define a direct HTTP request here instead.
-			proxyFunction: function(requestUrl, time, resolve, reject){
-				Meteor.call('getImage', requestUrl, function(err, res) {
-					if(err){
-						console.log('http request rejected');
-						reject(err);
-					}
-
-					resolve({ time: time, img: res });
-				});
-			},
-			
-			// your WMS query params
-			params: {
-				BBOX: "144.9497022,-42.5917177,145.7445272,-41.9883032",
-				LAYERS: "temp",
-				SRS: "EPSG:4326",
-				VERSION: "1.1.1",
-				WIDTH: 2048, 
-				HEIGHT: 2048,
-				transparent: true,
-
-				// ncWMS params (optional)
-				abovemaxcolor: "extend",
-				belowmincolor: "extend",
-				colorscalerange: "10.839295,13.386014",
-				elevation: "-5.050000000000001",
-				format: "image/png",
-				logscale: false,
-				numcolorbands: "50",
-				opacity: "100",
-				styles: "boxfill/rainbow"
-			}
-		};
+```javascript
+var args = {
 		
-		LeafletWmsAnimator.initAnimation(args, function(frames){
-			// callback function returns an array of images with their
-			// respective time stamps (e.g. you can use timestamps in UI)
-		});
+		// reference to your leaflet map
+		map: map,
+		
+		// WMS endpoint
+		url: 'http://localhost:8080/geoserver/wms',
+		
+		// time slices to create (u probably want more than 2)
+		times: ["2016-09-17T11:00:00.000Z", "2016-09-17T12:00:00.000Z"],
+		
+		// the bounds for the entire target WMS layer
+		bbox: ["144.9497022","-42.5917177","145.7445272","-41.9883032"],
+		
+		// how long to show each frame in the animation  
+		timeoutMs: 300,
+		
+		// due to CORS restrictions, you need to define a function to ask your proxy server to make the WMS 
+		// GetMap request - this example is using a call to a server function called 'getImage' (in MeteorJS)
+		// note that if your target WMS is CORS enabled, you can just define a direct HTTP request here instead.
+		proxyFunction: function(requestUrl, time, resolve, reject){
+			Meteor.call('getImage', requestUrl, function(err, res) {
+				if(err){
+					console.log('http request rejected');
+					reject(err);
+				}
 
+				resolve({ time: time, img: res });
+			});
+		},
+		
+		// your WMS query params
+		params: {
+			BBOX: "144.9497022,-42.5917177,145.7445272,-41.9883032",
+			LAYERS: "temp",
+			SRS: "EPSG:4326",
+			VERSION: "1.1.1",
+			WIDTH: 2048, 
+			HEIGHT: 2048,
+			transparent: true,
+
+			// ncWMS params (optional)
+			abovemaxcolor: "extend",
+			belowmincolor: "extend",
+			colorscalerange: "10.839295,13.386014",
+			elevation: "-5.050000000000001",
+			format: "image/png",
+			logscale: false,
+			numcolorbands: "50",
+			opacity: "100",
+			styles: "boxfill/rainbow"
+		}
+	};
+	
+	LeafletWmsAnimator.initAnimation(args, function(frames){
+		// callback function returns an array of images with their
+		// respective time stamps (e.g. you can use timestamps in UI)
+	});
+```
 
 ## convenience functions
 
@@ -91,10 +91,11 @@ The `wmsAnimatorFrameIndexEvent` is dispatched from `window` every time a frame 
 
 Example use:
 
-	window.addEventListener('wmsAnimatorFrameIndexEvent', function (e) {
-       console.log('current frame time is at array index: '+ e.detail);
-    });
-
+```javascript
+window.addEventListener('wmsAnimatorFrameIndexEvent', function (e) {
+   console.log('current frame time is at array index: '+ e.detail);
+});
+```
 
 ## license
 MIT
