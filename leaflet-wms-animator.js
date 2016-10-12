@@ -23,7 +23,7 @@
 	var frameIndex = 0;
 	var animate = false;
 	var timer = null;
-	var timeoutMs = null;
+	var timeoutMs = 200;
 
 	LeafletWmsAnimator.initAnimation = function(options, callback){
 
@@ -37,7 +37,7 @@
 		var requests = _buildRequests(options.url, options.params, options.times, options.proxyFunction);
 
 		Promise.all(requests).then(function(responses){
-			_createFrameLayers(responses, options.bbox, options.map);
+			LeafletWmsAnimator.createFrameLayers(responses, options.bbox, options.map);
 			callback(responses);
 		});
 	};
@@ -100,18 +100,14 @@
 		window.dispatchEvent(new CustomEvent('wmsAnimatorFrameIndexEvent', { detail: index }));
 	};
 
-	function _animateLoop(){
-		if(!animate){
-			clearTimeout(timer);
-			return;
-		}
-		timer = setTimeout(function(){
-			LeafletWmsAnimator.forward();
-			_animateLoop();
-		}, timeoutMs);
-	}
-
-	function _createFrameLayers(frames, bounds, map){
+	/**
+	 * You can also use this function directly if you already have your frames from
+	 * another source, e.g. s3, cache
+	 * @param frames
+	 * @param bounds
+	 * @param map
+	 */
+	LeafletWmsAnimator.createFrameLayers = function(frames, bounds, map){
 
 		layers = [];
 		var southWest = L.latLng(bounds[1], bounds[0]);
@@ -132,6 +128,17 @@
 			index++;
 		});
 
+	};
+
+	function _animateLoop(){
+		if(!animate){
+			clearTimeout(timer);
+			return;
+		}
+		timer = setTimeout(function(){
+			LeafletWmsAnimator.forward();
+			_animateLoop();
+		}, timeoutMs);
 	}
 
 	function _buildRequests(url, params, times, proxyFunction){
