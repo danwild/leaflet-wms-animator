@@ -38,6 +38,22 @@ var args = {
 	// how long to show each frame in the animation  
 	timeoutMs: 300,
 	
+	// PREFERRED: provide your own frames, that have been cached earlier:
+	frames: [
+		{
+			"time": "2016-09-17T11:00:00.000Z",
+			"img": <base64 string>
+		},
+		{
+            "time": "2016-09-17T12:00:00.000Z",
+            "img": <base64 string>
+        },
+        
+        ...
+	],
+	
+	
+	// OPTIONAL - only required if you are not providing your own frames
 	// **See defining image request for more info**
 	// due to CORS restrictions, you need to define an async function to ask your proxy server to make the WMS 
 	// GetMap request and resolve the result (as a base64 encoded string). This example is using a call to a server function called 
@@ -53,6 +69,7 @@ var args = {
 		});
 	},
 	
+	// OPTIONAL - only required if you are not providing your own frames
 	// your WMS query params
 	params: {
 		BBOX: "144.9497022,-42.5917177,145.7445272,-41.9883032",
@@ -77,8 +94,9 @@ var args = {
 };
 
 LeafletWmsAnimator.initAnimation(args, function(frames){
-	// callback function returns an array of images with their
-	// respective time stamps (e.g. you can use timestamps in UI)
+
+	// if you didn't provide your own frames this callback function returns the 
+	// array of images with their respective time stamps (e.g. you can use timestamps in UI)
 });
 ```
 
