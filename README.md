@@ -14,7 +14,7 @@ Note that this plugin works for ncWMS (as per example, `params` object accepts a
 ## notes before use
 
 - **Please use responsibly** if you you attempt to request too many tiles at once, you may cause out of memory issues in your target WMS server.
- A better approach for larger animations might be to use the `createFrameLayers` function directly, with images you have cached yourself.
+ A better approach for larger animations is to use the `frames` param to supply images you have pre-cached yourself.
 - To get around CORS restrictions, I am using a proxy server. To use this plugin you will also need a proxy server, OR have admin access to your target WMS to enable CORS.
 - This plugin uses [ES6 Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) syntax,
  which is [not supported](http://caniuse.com/#feat=promises) by older browsers - you may need a [Polyfill](https://babeljs.io/docs/usage/polyfill/).
